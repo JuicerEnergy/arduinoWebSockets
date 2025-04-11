@@ -74,7 +74,7 @@
 #define WEBSOCKETS_YIELD_MORE() delay(1)
 #elif defined(ESP32)
 #define WEBSOCKETS_YIELD() yield()
-#define WEBSOCKETS_YIELD_MORE() delay(1)
+#define WEBSOCKETS_YIELD_MORE() delay(10)
 #endif
 
 #elif defined(STM32_DEVICE)

@@ -96,7 +96,8 @@ void WebSocketsServerCore::begin(void) {
 #ifdef ESP8266
     randomSeed(RANDOM_REG32);
 #elif defined(ESP32) && defined(WDEV_RND_REG)
-    randomSeed(REG_READ(WDEV_RND_REG));
+    //JUCR Dont call this randomSeed(REG_READ(WDEV_RND_REG));
+    randomSeed(millis()); //JUCR
 #elif defined(ESP32)
 #define DR_REG_RNG_BASE 0x3ff75144
     randomSeed(READ_PERI_REG(DR_REG_RNG_BASE));
@@ -461,7 +462,9 @@ WSclient_t * WebSocketsServerCore::newClient(WEBSOCKETS_NETWORK_CLASS * TCPclien
 #endif
 #if(WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
             // set Timeout for readBytesUntil and readStringUntil
-            client->tcp->setTimeout(WEBSOCKETS_TCP_TIMEOUT);
+            // JUCR : THIS TIMEOUT IS IN SECONDS, dont pass in Millis
+            // client->tcp->setTimeout(WEBSOCKETS_TCP_TIMEOUT);
+            client->tcp->setTimeout(JUCR_WEBSOCKETS_TCP_TIMEOUT_SECS);
 #endif
             client->status = WSC_HEADER;
 #if(WEBSOCKETS_NETWORK_TYPE == NETWORK_ESP8266) || (WEBSOCKETS_NETWORK_TYPE == NETWORK_ESP8266_ASYNC) || (WEBSOCKETS_NETWORK_TYPE == NETWORK_ESP32) || (WEBSOCKETS_NETWORK_TYPE == NETWORK_RP2040)

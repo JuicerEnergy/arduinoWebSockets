@@ -701,7 +701,7 @@ size_t WebSockets::write(WSclient_t * client, uint8_t * out, size_t n) {
             total += len;
             // DEBUG_WEBSOCKETS("write %d left %d!\n", len, n);
         } else {
-            DEBUG_WEBSOCKETS("WS write %d failed left %d!\n", len, n);
+            DEBUG_WEBSOCKETS("WS write %d failed left %d, done %d!\n", len, n, total);
         }
         if(n > 0) {
             WEBSOCKETS_YIELD();

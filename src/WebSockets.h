@@ -448,6 +448,10 @@ class WebSockets {
     void handleHBTimeout(WSclient_t * client);
 };
 
+//JUCR
+void debugWS(const char* line, ...);
+
+
 #ifndef UNUSED
 #define UNUSED(var) (void)(var)
 #endif

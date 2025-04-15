@@ -56,7 +56,7 @@ void WebSocketsClient::begin(const char * host, uint16_t port, const char * url,
 #endif
 #endif
 
-    _client.num    = 0;
+    _client.num    = 100;
     _client.status = WSC_NOT_CONNECTED;
     _client.tcp    = NULL;
 #if defined(HAS_SSL)

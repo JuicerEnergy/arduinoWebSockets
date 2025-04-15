@@ -327,6 +327,7 @@ bool WebSockets::sendFrame(WSclient_t * client, WSopcode_t opcode, uint8_t * pay
 void WebSockets::headerDone(WSclient_t * client) {
     client->status    = WSC_CONNECTED;
     client->cWsRXsize = 0;
+    client->tcp->flush(); //JUCR
     DEBUG_WEBSOCKETS("[WS][%d][headerDone] Header Handling Done.\n", client->num);
 #if(WEBSOCKETS_NETWORK_TYPE == NETWORK_ESP8266_ASYNC)
     client->cHttpLine = "";
@@ -676,7 +677,7 @@ size_t WebSockets::write(WSclient_t * client, uint8_t * out, size_t n) {
     unsigned long t = millis();
     size_t len      = 0;
     size_t total    = 0;
-    DEBUG_WEBSOCKETS("[write] n: %zu t: %lu\n", n, t);
+    DEBUG_WEBSOCKETS("[write]fd[%d] n: %zu t: %lu\n", client->tcp->fd(), n, t);
     while(n > 0) {
         if(client->tcp == NULL) {
             DEBUG_WEBSOCKETS("[write] tcp is null!\n");
@@ -699,7 +700,7 @@ size_t WebSockets::write(WSclient_t * client, uint8_t * out, size_t n) {
             out += len;
             n -= len;
             total += len;
-            // DEBUG_WEBSOCKETS("write %d left %d!\n", len, n);
+            DEBUG_WEBSOCKETS("write %d left %d!\n", len, n);
         } else {
             DEBUG_WEBSOCKETS("WS write %d failed left %d, done %d!\n", len, n, total);
         }

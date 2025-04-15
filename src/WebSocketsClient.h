@@ -160,7 +160,7 @@ class WebSocketsClient : protected WebSockets {
     bool clientIsConnected(WSclient_t * client);
 
 #if(WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
-    void handleClientData(void);
+    virtual void handleClientData(void);
 #endif
 
     void sendHeader(WSclient_t * client);

@@ -859,7 +859,7 @@ void WebSocketsServerCore::handleHeader(WSclient_t * client, String * headerLine
 
             String handshake = WEBSOCKETS_STRING(
                 "HTTP/1.1 101 Switching Protocols\r\n"
-                "Server: arduino-WebSocketsServer\r\n"
+                "Server: JUCRVOR\r\n"
                 "Upgrade: websocket\r\n"
                 "Connection: Upgrade\r\n"
                 "Sec-WebSocket-Version: 13\r\n"
@@ -881,12 +881,13 @@ void WebSocketsServerCore::handleHeader(WSclient_t * client, String * headerLine
 
             DEBUG_WEBSOCKETS("[WS-Server][%d][handleHeader] handshake %s", client->num, (uint8_t *)handshake.c_str());
 
-            write(client, (uint8_t *)handshake.c_str(), handshake.length());
+            size_t wroteSz = write(client, (uint8_t *)handshake.c_str(), handshake.length());
+            DEBUG_WEBSOCKETS("[WS-Server][%d][handleHeader] handshake wrote %u of %u, avail %d", client->num, wroteSz, handshake.length(), client->tcp->available());
 
             headerDone(client);
 
             // send ping
-            WebSockets::sendFrame(client, WSop_ping);
+            // WebSockets::sendFrame(client, WSop_ping);
 
             runCbEvent(client->num, WStype_CONNECTED, (uint8_t *)client->cUrl.c_str(), client->cUrl.length());
 
@@ -950,9 +951,10 @@ void WebSocketsServerCore::disableHeartbeat() {
  * called to initialize the Websocket server
  */
 void WebSocketsServer::begin(void) {
+    DEBUG_WEBSOCKETS("[WebSocketsServer] Begin called.\n");
     WebSocketsServerCore::begin();
+    DEBUG_WEBSOCKETS("[WebSocketsServer] calling begin of _server.\n");
     _server->begin();
-
     DEBUG_WEBSOCKETS("[WS-Server] Server Started.\n");
 }
 

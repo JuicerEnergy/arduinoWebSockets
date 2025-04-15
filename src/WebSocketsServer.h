@@ -98,7 +98,7 @@ class WebSocketsServerCore : protected WebSockets {
     void loop(void);    // handle client data only
 #endif
 
-    WSclient_t * newClient(WEBSOCKETS_NETWORK_CLASS * TCPclient);
+    virtual WSclient_t * newClient(WEBSOCKETS_NETWORK_CLASS * TCPclient);
 
   protected:
     String _origin;
@@ -120,7 +120,7 @@ class WebSocketsServerCore : protected WebSockets {
 
     void messageReceived(WSclient_t * client, WSopcode_t opcode, uint8_t * payload, size_t length, bool fin);
 
-    void clientDisconnect(WSclient_t * client);
+    virtual void clientDisconnect(WSclient_t * client);
     bool clientIsConnected(WSclient_t * client);
 
 #if(WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
@@ -200,7 +200,7 @@ class WebSocketsServerCore : protected WebSockets {
     }
 
 #if(WEBSOCKETS_NETWORK_TYPE != NETWORK_ESP8266_ASYNC)
-    WSclient_t * handleNewClient(WEBSOCKETS_NETWORK_CLASS * tcpClient);
+    virtual WSclient_t * handleNewClient(WEBSOCKETS_NETWORK_CLASS * tcpClient);
 #endif
 
     /**

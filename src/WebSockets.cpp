@@ -327,7 +327,6 @@ bool WebSockets::sendFrame(WSclient_t * client, WSopcode_t opcode, uint8_t * pay
 void WebSockets::headerDone(WSclient_t * client) {
     client->status    = WSC_CONNECTED;
     client->cWsRXsize = 0;
-    client->tcp->flush(); //JUCR
     DEBUG_WEBSOCKETS("[WS][%d][headerDone] Header Handling Done.\n", client->num);
 #if(WEBSOCKETS_NETWORK_TYPE == NETWORK_ESP8266_ASYNC)
     client->cHttpLine = "";

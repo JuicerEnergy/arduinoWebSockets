@@ -234,7 +234,10 @@
 
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
+#include <CustomWiFiClient.h>
+
 #define SSL_AXTLS
+#define WEBSOCKETS_NETWORK_CLASS_CUSTOM CustomWiFiClient
 #define WEBSOCKETS_NETWORK_CLASS WiFiClient
 #define WEBSOCKETS_NETWORK_SSL_CLASS WiFiClientSecure
 #define WEBSOCKETS_NETWORK_SERVER_CLASS WiFiServer

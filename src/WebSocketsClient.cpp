@@ -247,14 +247,16 @@ void WebSocketsClient::loop(void) {
 #if(WEBSOCKETS_NETWORK_TYPE == NETWORK_WIFI_NINA) || (WEBSOCKETS_NETWORK_TYPE == NETWORK_SAMD_SEED) || (WEBSOCKETS_NETWORK_TYPE == NETWORK_UNOWIFIR4)
                 // does not support delete (no destructor)
 #else
-                delete _client.ssl;
+               //JUCR delete _client.ssl;
 #endif
 
-                _client.ssl = NULL;
-                _client.tcp = NULL;
+                //JUCR _client.ssl = NULL;
+                //JUCR _client.tcp = NULL;
+            }else{ //JUCR
+                _client.ssl = new WEBSOCKETS_NETWORK_SSL_CLASS();
+                _client.tcp = _client.ssl;
             }
-            _client.ssl = new WEBSOCKETS_NETWORK_SSL_CLASS();
-            _client.tcp = _client.ssl;
+
             if(_CA_cert) {
                 DEBUG_WEBSOCKETS("[WS-Client] setting CA certificate");
 #if defined(ESP32)

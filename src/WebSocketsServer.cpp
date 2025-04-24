@@ -610,6 +610,9 @@ void WebSocketsServerCore::clientDisconnect(WSclient_t * client) {
  * @return true = connected
  */
 bool WebSocketsServerCore::clientIsConnected(WSclient_t * client) {
+    //JUCR if you dont set it to 0, WiFiClient's connected() function could return false
+    // for no reason.
+    errno = 0 ;
     if(!client->tcp) {
         return false;
     }

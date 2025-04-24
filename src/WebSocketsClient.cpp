@@ -583,6 +583,8 @@ void WebSocketsClient::clientDisconnect(WSclient_t * client) {
  * @return true = conneted
  */
 bool WebSocketsClient::clientIsConnected(WSclient_t * client) {
+    //JUCR reset errno otherwise the connected function can fail
+    errno = 0;
     if(!client->tcp) {
         return false;
     }
